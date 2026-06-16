@@ -18,7 +18,7 @@ services:
       - key: MAX_UPLOAD_SIZE_MB
         value: "100"
       - key: CORS_ORIGINS
-        value: "https://file-annotation.vercel.app"
+        value: '["https://file-annotation.vercel.app"]'
       - key: GCP_PROJECT_ID
         sync: false
       - key: GCP_LOCATION
