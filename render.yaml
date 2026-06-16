@@ -34,5 +34,4 @@ databases:
   - name: file-annotation-db
     plan: free
     databaseName: document_annotation
-    user: postgres
     region: oregon
