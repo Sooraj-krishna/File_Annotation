@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: file-annotation-api
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    region: oregon
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: file-annotation-db
+          property: connectionString
+      - key: STORAGE__TYPE
+        value: local
+      - key: STORAGE__PATH
+        value: /app/storage/pdfs
+      - key: MAX_UPLOAD_SIZE_MB
+        value: "100"
+      - key: CORS_ORIGINS
+        value: "https://file-annotation.vercel.app"
+      - key: GCP_PROJECT_ID
+        sync: false
+      - key: GCP_LOCATION
+        value: "us-central1"
+      - key: GEMINI_MODEL
+        value: "gemini-2.5-flash"
+      - key: PYTHONPATH
+        value: "/app"
+    healthCheckPath: /health
+    autoDeploy: true
+
+databases:
+  - name: file-annotation-db
+    plan: free
+    databaseName: document_annotation
+    user: postgres
+    region: oregon

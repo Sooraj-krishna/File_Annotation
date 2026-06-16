@@ -1,0 +1,12 @@
+name: Keep Render Awake
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping health endpoint
+        run: curl -fsSL https://file-annotation-api.onrender.com/health

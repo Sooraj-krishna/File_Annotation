@@ -1,0 +1,27 @@
+# Python bytecode/caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Caches
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Secrets & Configuration
+.env
+credentials/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# JetBrains IDE
+.idea/

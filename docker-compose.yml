@@ -1,0 +1,48 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: document_annotation
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/document_annotation
+      STORAGE__TYPE: local
+      STORAGE__PATH: /app/storage
+      GOOGLE_APPLICATION_CREDENTIALS: /app/credentials/datamart-499007-3f41703f5144.json
+      GOOGLE_CLOUD_PROJECT: datamart-499007
+      GCP_PROJECT_ID: datamart-499007
+      GCP_LOCATION: us-central1
+      GEMINI_MODEL: gemini-2.5-flash
+    volumes:
+      - ./backend/credentials:/app/credentials:ro
+      - ./storage:/app/storage
+    ports:
+      - "8010:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
