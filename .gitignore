@@ -27,7 +27,7 @@ storage/pdfs/*
 
 # Credentials
 credentials/
-*.json
+*credentials*/*.json
 _MACOSX/
 Arabic_DataMart_DataSet/
 /storage/

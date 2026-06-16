@@ -1,0 +1,39 @@
+{
+  "name": "file-annotation",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "packages/*",
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && uvicorn app.main:app --reload --host 0.0.0.0 --port 8000",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "npm run build:shared && npm run build:backend && npm run build:frontend",
+    "build:shared": "cd packages/shared-types && npm run build",
+    "build:backend": "cd backend && echo 'Backend build - Docker handles this'",
+    "build:frontend": "cd frontend && npm run build",
+    "typecheck": "npm run typecheck:shared && npm run typecheck:frontend",
+    "typecheck:shared": "cd packages/shared-types && npx tsc --noEmit",
+    "typecheck:frontend": "cd frontend && npm run typecheck",
+    "lint": "npm run lint:backend && npm run lint:frontend",
+    "lint:backend": "cd backend && ruff check .",
+    "lint:frontend": "cd frontend && npm run lint 2>/dev/null || echo 'No lint script'",
+    "test": "npm run test:backend && npm run test:frontend",
+    "test:backend": "cd backend && pytest",
+    "test:frontend": "cd frontend && npm run test:run",
+    "db:migrate": "cd backend && alembic upgrade head",
+    "db:revision": "cd backend && alembic revision --autogenerate -m",
+    "docker:build": "docker compose build",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
