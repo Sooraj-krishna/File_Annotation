@@ -52,5 +52,5 @@ export async function deleteDocument(id: string): Promise<void> {
  * This is a direct URL, not an API call through the Axios client.
  */
 export function getDocumentFileUrl(id: string): string {
-  return `/api/documents/${id}/file`;
+  return `${API_BASE}/documents/${id}/file`;
 }
