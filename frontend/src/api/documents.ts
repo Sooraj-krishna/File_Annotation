@@ -4,6 +4,7 @@
 
 import api from "./client";
 import type { DocumentList, DocumentResponse } from "@/shared/types";
+import { API_BASE } from "@/shared/constants";
 
 export async function uploadDocument(file: File): Promise<DocumentResponse> {
   const form = new FormData();
