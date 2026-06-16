@@ -30,3 +30,13 @@ def register_error_handlers(app: FastAPI):
     async def storage_handler(request: Request, exc: StorageException):
         """Handle 500 errors — file storage operation failed."""
         return JSONResponse(status_code=500, content={"detail": "Storage error"})
+
+    @app.exception_handler(FileNotFoundError)
+    async def file_not_found_handler(request: Request, exc: FileNotFoundError):
+        """Handle FileNotFoundError — file was not found on the local filesystem."""
+        return JSONResponse(
+            status_code=404,
+            content={
+                "detail": "The PDF file was not found on the server's storage. Because this server uses ephemeral storage, uploaded files are cleared on redeployment or restart. Please delete this document from the list and upload it again."
+            }
+        )
