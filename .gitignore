@@ -30,4 +30,4 @@ credentials/
 *.json
 _MACOSX/
 Arabic_DataMart_DataSet/
-storage/
+/storage/
