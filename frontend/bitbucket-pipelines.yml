@@ -1,0 +1,17 @@
+image: atlassian/default-image:2
+
+pipelines:
+  branches:
+    main:
+      - step:
+          name: Sync to GitHub (main)
+          script:
+            - chmod +x sync-to-github.sh
+            - ./sync-to-github.sh
+          services:
+            - docker   
+
+definitions:
+  services:
+    docker:
+      memory: 2048
