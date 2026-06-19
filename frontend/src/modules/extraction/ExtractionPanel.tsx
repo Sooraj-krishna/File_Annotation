@@ -14,12 +14,11 @@ interface ExtractionPanelProps {
 }
 
 const sectionStyle: React.CSSProperties = {
-  background: "#FFFFFF",
+  background: "rgba(15, 23, 42, 0.45)",
   borderRadius: 12,
   padding: 24,
   marginBottom: 20,
-  boxShadow: "0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06)",
-  border: "1px solid rgba(0,0,0,0.04)",
+  border: "1px solid var(--border)",
 };
 
 const btnFloating: React.CSSProperties = {
@@ -39,19 +38,17 @@ const btnFloating: React.CSSProperties = {
 
 const btnWhite: React.CSSProperties = {
   ...btnFloating,
-  background: "#FFFFFF",
-  color: "#374151",
-  border: "1px solid #E5E7EB",
-  boxShadow: "0 4px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04)",
+  background: "var(--bg-tertiary)",
+  color: "var(--text-primary)",
+  border: "1px solid var(--border-light)",
 };
 
 const btnDisabled: React.CSSProperties = {
   ...btnFloating,
-  background: "#F3F4F6",
-  color: "#D1D5DB",
+  background: "var(--bg-primary)",
+  color: "var(--text-light)",
   cursor: "default",
-  boxShadow: "none",
-  border: "none",
+  border: "1px solid var(--border)",
 };
 
 const resultCardStyle: React.CSSProperties = {
@@ -60,21 +57,21 @@ const resultCardStyle: React.CSSProperties = {
   gap: 12,
   padding: "10px 14px",
   marginBottom: 8,
-  background: "#F8FAFC",
+  background: "var(--bg-primary)",
   borderRadius: 10,
-  border: "1px solid #F1F5F9",
+  border: "1px solid var(--border)",
 };
 
 const inputBase: React.CSSProperties = {
-  border: "1px solid #E5E7EB",
+  border: "1px solid var(--border)",
   borderRadius: 8,
   padding: "8px 10px",
   fontSize: 13,
   outline: "none",
-  background: "#FFFFFF",
-  fontFamily: '"Inter", system-ui, sans-serif',
+  background: "var(--bg-primary)",
+  color: "var(--text-primary)",
+  fontFamily: '"Plus Jakarta Sans", sans-serif',
   boxSizing: "border-box",
-  boxShadow: "0 1px 2px rgba(0,0,0,0.03)",
 };
 
 const labelInputStyle: React.CSSProperties = {
@@ -82,33 +79,33 @@ const labelInputStyle: React.CSSProperties = {
   fontWeight: 600,
   width: "40%",
   textAlign: "start",
-  color: "#111827",
+  color: "var(--text-primary)",
 };
 
 const cropDisplayStyle: React.CSSProperties = {
   flex: 1,
   borderRadius: 6,
   objectFit: "cover",
-  border: "1px solid #E5E7EB",
-  background: "#F3F4F6",
+  border: "1px solid var(--border)",
+  background: "var(--bg-tertiary)",
   height: 56,
   width: "100%",
 };
 
 const errorCardStyle: React.CSSProperties = {
   padding: 14,
-  background: "#FEF2F2",
-  border: "1px solid #FCA5A5",
+  background: "rgba(239, 68, 68, 0.1)",
+  border: "1px solid rgba(239, 68, 68, 0.3)",
   borderRadius: 10,
   fontSize: 12,
-  color: "#DC2626",
+  color: "#EF4444",
   marginTop: 8,
   borderLeft: "5px solid #EF4444",
 };
 
 const hintStyle: React.CSSProperties = {
   fontSize: 11,
-  color: "#9CA3AF",
+  color: "var(--text-light)",
   textAlign: "center",
   padding: "6px 0",
   fontStyle: "italic",
@@ -135,10 +132,9 @@ export function ExtractionPanel({ documentId, annotations }: ExtractionPanelProp
   const btnExtractHover: React.CSSProperties = extractHovered
     ? {
         ...btnFloating,
-        background: "linear-gradient(135deg, #00A3A4 0%, #008384 100%)",
+        background: "linear-gradient(135deg, var(--accent-emerald) 0%, var(--accent-emerald-hover) 100%)",
         color: "#fff",
         border: "none",
-        boxShadow: "0 6px 18px rgba(0,131,132,0.30), 0 2px 6px rgba(0,131,132,0.15)",
       }
     : btnWhite;
 

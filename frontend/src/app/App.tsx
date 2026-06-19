@@ -9,26 +9,38 @@ import type { DocumentResponse } from "@/shared/types";
 type Screen = "loading" | "landing" | "workspace";
 
 const HEADER = {
-  height: 56,
+  height: 64,
   flexShrink: 0,
-  background: "#008384",
+  background: "var(--bg-secondary)",
+  borderBottom: "1px solid var(--border)",
   display: "flex",
   alignItems: "center",
-  padding: "0 24px",
+  justifyContent: "space-between",
+  padding: "0 32px",
+  boxSizing: "border-box",
 } as const;
 
 const headerTitle = {
-  color: "#fff",
-  fontSize: 20,
-  fontWeight: 600,
-  fontFamily: '"Inter", system-ui, -apple-system, sans-serif',
+  color: "var(--text-primary)",
+  fontSize: 18,
+  fontWeight: 700,
+  letterSpacing: "-0.02em",
+  display: "flex",
+  alignItems: "center",
+  gap: 8,
+  fontFamily: '"Plus Jakarta Sans", sans-serif',
 } as const;
 
 const headerSubtitle = {
-  color: "rgba(255,255,255,0.7)",
-  fontSize: 13,
+  color: "var(--text-secondary)",
+  fontSize: 12,
+  fontWeight: 400,
+  background: "var(--bg-tertiary)",
+  border: "1px solid var(--border-light)",
+  padding: "3px 8px",
+  borderRadius: 6,
   marginLeft: 12,
-  fontFamily: '"Inter", system-ui, -apple-system, sans-serif',
+  fontFamily: '"Plus Jakarta Sans", sans-serif',
 } as const;
 
 function App() {
@@ -102,9 +114,34 @@ function App() {
 
   const header = (
     <header style={HEADER}>
-      <span style={headerTitle}>File Annotation</span>
-      {screen === "workspace" && selectedDoc && (
-        <span style={headerSubtitle}>/ {selectedDoc.filename}</span>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <span style={headerTitle}>
+          <span style={{ color: "var(--accent-emerald)", fontSize: 20 }}>❖</span> VALOIS
+        </span>
+        {screen === "workspace" && selectedDoc && (
+          <span style={headerSubtitle}>{selectedDoc.filename}</span>
+        )}
+      </div>
+      {screen === "workspace" && (
+        <button
+          onClick={handleBack}
+          style={{
+            background: "none",
+            border: "none",
+            color: "var(--text-secondary)",
+            cursor: "pointer",
+            fontSize: 13,
+            fontWeight: 500,
+            display: "flex",
+            alignItems: "center",
+            gap: 6,
+            transition: "color 0.15s",
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.color = "var(--text-primary)"; }}
+          onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-secondary)"; }}
+        >
+          ← Dashboard
+        </button>
       )}
     </header>
   );

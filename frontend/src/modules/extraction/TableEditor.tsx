@@ -14,27 +14,28 @@ const cellInput: React.CSSProperties = {
   fontSize: 12,
   fontFamily: 'ui-monospace, "SF Mono", monospace',
   background: "transparent",
+  color: "var(--text-primary)",
   outline: "none",
   minWidth: 60,
 };
 
 const headerInput: React.CSSProperties = {
   ...cellInput,
-  color: "#fff",
+  color: "var(--text-primary)",
   fontWeight: 600,
 };
 
 const headerCell: React.CSSProperties = {
-  background: "#1e293b",
-  borderRight: "1px solid #334155",
-  borderBottom: "1px solid #334155",
+  background: "var(--bg-tertiary)",
+  borderRight: "1px solid var(--border)",
+  borderBottom: "1px solid var(--border)",
   minWidth: 70,
   position: "relative",
 };
 
 const dataCell: React.CSSProperties = {
-  borderRight: "1px solid #e2e8f0",
-  borderBottom: "1px solid #e2e8f0",
+  borderRight: "1px solid var(--border)",
+  borderBottom: "1px solid var(--border)",
   minWidth: 70,
   position: "relative",
 };
@@ -61,8 +62,8 @@ const deleteBtn: React.CSSProperties = {
 };
 
 const rowActionCell: React.CSSProperties = {
-  borderRight: "1px solid #e2e8f0",
-  borderBottom: "1px solid #e2e8f0",
+  borderRight: "1px solid var(--border)",
+  borderBottom: "1px solid var(--border)",
   width: 28,
   textAlign: "center",
   verticalAlign: "middle",
@@ -85,12 +86,12 @@ const actionBtn: React.CSSProperties = {
   padding: "4px 10px",
   fontSize: 11,
   fontWeight: 600,
-  border: "1px solid #d1d5db",
+  border: "1px solid var(--border-light)",
   borderRadius: 6,
-  background: "#fff",
+  background: "var(--bg-tertiary)",
   cursor: "pointer",
-  color: "#374151",
-  fontFamily: "system-ui, sans-serif",
+  color: "var(--text-primary)",
+  fontFamily: '"Plus Jakarta Sans", sans-serif',
 };
 
 export function TableEditor({ data, onChange }: TableEditorProps) {
@@ -150,7 +151,7 @@ export function TableEditor({ data, onChange }: TableEditorProps) {
           borderCollapse: "collapse",
           width: "100%",
           fontSize: 12,
-          fontFamily: 'system-ui, sans-serif',
+          fontFamily: '"Plus Jakarta Sans", sans-serif',
         }}
       >
         <thead>
@@ -174,14 +175,14 @@ export function TableEditor({ data, onChange }: TableEditorProps) {
                 )}
               </th>
             ))}
-            <th style={{ background: "#1e293b", borderBottom: "1px solid #334155", width: 28 }} />
+            <th style={{ background: "var(--bg-tertiary)", borderBottom: "1px solid var(--border)", width: 28 }} />
           </tr>
         </thead>
         <tbody>
           {rows.map((row: string[], ri: number) => (
             <tr
               key={`r-${ri}`}
-              style={{ background: ri % 2 === 1 ? "#f8fafc" : "#fff" }}
+              style={{ background: ri % 2 === 1 ? "rgba(255, 255, 255, 0.02)" : "transparent" }}
             >
               {row.map((cell: string, ci: number) => (
                 <td key={`c-${ri}-${ci}`} style={dataCell}>

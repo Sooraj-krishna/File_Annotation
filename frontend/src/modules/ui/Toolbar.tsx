@@ -17,40 +17,38 @@ const btnBase: React.CSSProperties = {
   width: BTN_SIZE,
   height: BTN_SIZE,
   borderRadius: "50%",
-  border: "1px solid #E5E7EB",
-  background: "#fff",
+  border: "1px solid var(--border)",
+  background: "var(--bg-primary)",
   cursor: "pointer",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   fontSize: 18,
-  color: "#6B7280",
-  boxShadow: "0 4px 12px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04)",
+  color: "var(--text-secondary)",
   transition: "all 0.15s",
   position: "relative",
 };
 
 const btnSelectActive: React.CSSProperties = {
   ...btnBase,
-  background: "linear-gradient(135deg, #3B82F6 0%, #2563EB 100%)",
+  background: "linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-blue-hover) 100%)",
   color: "#fff",
-  border: "1px solid #2563EB",
-  boxShadow: "0 6px 16px rgba(37,99,235,0.35), 0 2px 6px rgba(37,99,235,0.2)",
+  border: "1px solid var(--accent-blue-hover)",
 };
 
 const btnRectActive: React.CSSProperties = {
   ...btnBase,
-  background: "linear-gradient(135deg, #F59E0B 0%, #D97706 100%)",
+  background: "linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-hover) 100%)",
   color: "#fff",
-  border: "1px solid #D97706",
-  boxShadow: "0 6px 16px rgba(217,119,6,0.35), 0 2px 6px rgba(217,119,6,0.2)",
+  border: "1px solid var(--accent-gold-hover)",
 };
 
 const btnDisabled: React.CSSProperties = {
   ...btnBase,
   opacity: 0.3,
   cursor: "default",
-  boxShadow: "none",
+  background: "var(--bg-primary)",
+  border: "1px solid var(--border)",
 };
 
 const kbdBadge: React.CSSProperties = {
@@ -59,9 +57,9 @@ const kbdBadge: React.CSSProperties = {
   right: -4,
   fontSize: 9,
   fontWeight: 700,
-  background: "#F3F4F6",
-  color: "#9CA3AF",
-  border: "1px solid #E5E7EB",
+  background: "var(--bg-tertiary)",
+  color: "var(--text-secondary)",
+  border: "1px solid var(--border-light)",
   borderRadius: 6,
   padding: "0 4px",
   lineHeight: "14px",
@@ -73,7 +71,7 @@ const kbdBadge: React.CSSProperties = {
 const separator: React.CSSProperties = {
   width: 1,
   height: 24,
-  background: "#E5E7EB",
+  background: "var(--border)",
   flexShrink: 0,
 };
 
