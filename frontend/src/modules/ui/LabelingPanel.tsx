@@ -17,8 +17,8 @@ const panelStyle: React.CSSProperties = {
   minWidth: 300,
   maxWidth: 420,
   flexShrink: 0,
-  borderLeft: "1px solid var(--border)",
-  background: "var(--bg-secondary)",
+  borderLeft: "1px solid #E5E7EB",
+  background: "#F8FAFC",
   display: "flex",
   flexDirection: "column",
   overflow: "hidden",
@@ -27,15 +27,15 @@ const panelStyle: React.CSSProperties = {
 const scrollStyle: React.CSSProperties = {
   flex: 1,
   overflowY: "auto",
-  padding: "0 16px 16px",
+  padding: "0 12px 12px",
 };
 
 const cardBase: React.CSSProperties = {
-  background: "rgba(15, 23, 42, 0.45)",
-  borderRadius: 12,
+  background: "#FFFFFF",
+  borderRadius: 8,
   padding: 20,
   marginBottom: 16,
-  border: "1px solid var(--border)",
+  boxShadow: "0px 4px 20px rgba(0,0,0,0.08)",
 };
 
 const sectionHeader: React.CSSProperties = {
@@ -43,14 +43,14 @@ const sectionHeader: React.CSSProperties = {
   fontWeight: 600,
   textTransform: "uppercase",
   letterSpacing: "0.08em",
-  color: "var(--text-secondary)",
+  color: "#6B7280",
   marginBottom: 12,
 };
 
 const annEntryStyle: React.CSSProperties = {
   padding: "10px 12px 10px 16px",
   fontSize: 13,
-  color: "var(--text-primary)",
+  color: "#374151",
   cursor: "pointer",
   display: "flex",
   alignItems: "center",
@@ -59,15 +59,15 @@ const annEntryStyle: React.CSSProperties = {
   marginBottom: 4,
   borderRadius: 8,
   transition: "all 0.12s",
-  background: "var(--bg-primary)",
-  border: "1px solid var(--border)",
+  background: "#F8FAFC",
+  border: "1px solid #F1F5F9",
 };
 
 const annEntrySel: React.CSSProperties = {
   ...annEntryStyle,
-  background: "rgba(16, 185, 129, 0.1)",
-  borderLeft: "5px solid var(--accent-emerald)",
-  borderColor: "var(--border)",
+  background: "#F0FDF4",
+  borderLeft: "5px solid #22C55E",
+  borderColor: "#F1F5F9",
 };
 
 const annDot: React.CSSProperties = {
@@ -95,7 +95,7 @@ const labelStyle: React.CSSProperties = {
   fontWeight: 500,
   letterSpacing: "0.08em",
   textTransform: "uppercase",
-  color: "var(--text-secondary)",
+  color: "#6B7280",
   marginBottom: 8,
 };
 
@@ -103,23 +103,22 @@ const inputStyle: React.CSSProperties = {
   width: "100%",
   boxSizing: "border-box",
   padding: "8px 10px",
-  border: "1px solid var(--border)",
-  background: "var(--bg-primary)",
-  color: "var(--text-primary)",
+  border: "1px solid #E5E7EB",
   borderRadius: 8,
   fontSize: 13,
-  fontFamily: '"Plus Jakarta Sans", sans-serif',
+  fontFamily: '"Inter", system-ui, -apple-system, sans-serif',
   outline: "none",
   resize: "vertical",
   minHeight: 50,
 };
 
 const bottomBarStyle: React.CSSProperties = {
-  padding: "16px",
-  borderTop: "1px solid var(--border)",
-  background: "var(--bg-secondary)",
+  padding: "12px 16px",
+  borderTop: "1px solid #E5E7EB",
+  background: "#FFFFFF",
   display: "flex",
   gap: 10,
+  boxShadow: "0 -4px 16px rgba(0,0,0,0.06)",
 };
 
 const btnBase: React.CSSProperties = {
@@ -140,23 +139,25 @@ const btnBase: React.CSSProperties = {
 
 const btnSave: React.CSSProperties = {
   ...btnBase,
-  background: "linear-gradient(135deg, var(--accent-emerald) 0%, var(--accent-emerald-hover) 100%)",
+  background: "linear-gradient(135deg, #00A3A4 0%, #008384 100%)",
   color: "#fff",
+  boxShadow: "0 6px 18px rgba(0,131,132,0.30), 0 2px 6px rgba(0,131,132,0.15)",
 };
 
 const btnPdf: React.CSSProperties = {
   ...btnBase,
-  background: "var(--bg-tertiary)",
-  color: "var(--text-primary)",
-  border: "1px solid var(--border-light)",
+  background: "#FFFFFF",
+  color: "#374151",
+  border: "1px solid #E5E7EB",
+  boxShadow: "0 4px 12px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04)",
 };
 
 const btnDisabled: React.CSSProperties = {
   ...btnBase,
-  background: "var(--bg-primary)",
-  color: "var(--text-light)",
-  border: "1px solid var(--border)",
+  background: "#F3F4F6",
+  color: "#D1D5DB",
   cursor: "default",
+  boxShadow: "none",
 };
 
 export function LabelingPanel({
@@ -268,8 +269,8 @@ export function LabelingPanel({
                           letterSpacing: "0.04em",
                           padding: "2px 6px",
                           borderRadius: 4,
-                          background: (ann.annotationType === "extraction" || ann.annotationType === "table") ? "rgba(16, 185, 129, 0.15)" : "var(--bg-tertiary)",
-                          color: (ann.annotationType === "extraction" || ann.annotationType === "table") ? "var(--accent-emerald)" : "var(--text-secondary)",
+                          background: (ann.annotationType === "extraction" || ann.annotationType === "table") ? "#D1FAF5" : "#F3F4F6",
+                          color: (ann.annotationType === "extraction" || ann.annotationType === "table") ? "#008384" : "#6B7280",
                           flexShrink: 0,
                         }}
                       >
@@ -298,7 +299,7 @@ export function LabelingPanel({
             />
 
             <div style={{ ...labelStyle, marginTop: 16 }}>Type</div>
-            <div style={{ display: "flex", borderRadius: 6, overflow: "hidden", border: "1px solid var(--border)", marginBottom: 4 }}>
+            <div style={{ display: "flex", borderRadius: 6, overflow: "hidden", border: "1px solid #D1D5DB", marginBottom: 4 }}>
               <button
                 style={{
                   flex: 1,
@@ -306,10 +307,10 @@ export function LabelingPanel({
                   border: "none",
                   fontSize: 12,
                   cursor: "pointer",
-                  fontFamily: '"Plus Jakarta Sans", sans-serif',
+                  fontFamily: '"Inter", system-ui, sans-serif',
                   fontWeight: (selected.annotationType === "extraction" || selected.annotationType === "table") ? 600 : 500,
-                  background: (selected.annotationType === "extraction" || selected.annotationType === "table") ? "rgba(16, 185, 129, 0.15)" : "var(--bg-primary)",
-                  color: (selected.annotationType === "extraction" || selected.annotationType === "table") ? "var(--accent-emerald)" : "var(--text-secondary)",
+                  background: (selected.annotationType === "extraction" || selected.annotationType === "table") ? "#E8F8F8" : "#fff",
+                  color: (selected.annotationType === "extraction" || selected.annotationType === "table") ? "#008384" : "#374151",
                 }}
                 onClick={() => updateAnnotation(selected.id, { annotationType: "extraction" })}
               >
@@ -320,13 +321,13 @@ export function LabelingPanel({
                   flex: 1,
                   height: 30,
                   border: "none",
-                  borderLeft: "1px solid var(--border)",
+                  borderLeft: "1px solid #D1D5DB",
                   fontSize: 12,
                   cursor: "pointer",
-                  fontFamily: '"Plus Jakarta Sans", sans-serif',
+                  fontFamily: '"Inter", system-ui, sans-serif',
                   fontWeight: selected.annotationType === "reference" ? 600 : 500,
-                  background: selected.annotationType === "reference" ? "var(--bg-tertiary)" : "var(--bg-primary)",
-                  color: selected.annotationType === "reference" ? "var(--text-primary)" : "var(--text-secondary)",
+                  background: selected.annotationType === "reference" ? "#F3F4F6" : "#fff",
+                  color: selected.annotationType === "reference" ? "#6B7280" : "#374151",
                 }}
                 onClick={() => updateAnnotation(selected.id, { annotationType: "reference" })}
               >
@@ -342,14 +343,14 @@ export function LabelingPanel({
                 width: 36,
                 height: 36,
                 borderRadius: "50%",
-                border: "1px solid rgba(239, 68, 68, 0.3)",
-                background: "rgba(239, 68, 68, 0.1)",
-                color: "#EF4444",
+                border: "1px solid #FCA5A5",
+                background: "#FEF2F2",
                 cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 fontSize: 16,
+                boxShadow: "0 2px 8px rgba(239,68,68,0.15)",
                 marginLeft: "auto",
                 marginRight: "auto",
               }}

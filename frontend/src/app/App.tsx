@@ -9,38 +9,26 @@ import type { DocumentResponse } from "@/shared/types";
 type Screen = "loading" | "landing" | "workspace";
 
 const HEADER = {
-  height: 64,
+  height: 56,
   flexShrink: 0,
-  background: "var(--bg-secondary)",
-  borderBottom: "1px solid var(--border)",
+  background: "#008384",
   display: "flex",
   alignItems: "center",
-  justifyContent: "space-between",
-  padding: "0 32px",
-  boxSizing: "border-box",
+  padding: "0 24px",
 } as const;
 
 const headerTitle = {
-  color: "var(--text-primary)",
-  fontSize: 18,
-  fontWeight: 700,
-  letterSpacing: "-0.02em",
-  display: "flex",
-  alignItems: "center",
-  gap: 8,
-  fontFamily: '"Plus Jakarta Sans", sans-serif',
+  color: "#fff",
+  fontSize: 20,
+  fontWeight: 600,
+  fontFamily: '"Inter", system-ui, -apple-system, sans-serif',
 } as const;
 
 const headerSubtitle = {
-  color: "var(--text-secondary)",
-  fontSize: 12,
-  fontWeight: 400,
-  background: "var(--bg-tertiary)",
-  border: "1px solid var(--border-light)",
-  padding: "3px 8px",
-  borderRadius: 6,
+  color: "rgba(255,255,255,0.7)",
+  fontSize: 13,
   marginLeft: 12,
-  fontFamily: '"Plus Jakarta Sans", sans-serif',
+  fontFamily: '"Inter", system-ui, -apple-system, sans-serif',
 } as const;
 
 function App() {
@@ -114,34 +102,9 @@ function App() {
 
   const header = (
     <header style={HEADER}>
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <span style={headerTitle}>
-          <span style={{ color: "var(--accent-emerald)", fontSize: 20 }}>❖</span> VALOIS
-        </span>
-        {screen === "workspace" && selectedDoc && (
-          <span style={headerSubtitle}>{selectedDoc.filename}</span>
-        )}
-      </div>
-      {screen === "workspace" && (
-        <button
-          onClick={handleBack}
-          style={{
-            background: "none",
-            border: "none",
-            color: "var(--text-secondary)",
-            cursor: "pointer",
-            fontSize: 13,
-            fontWeight: 500,
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
-            transition: "color 0.15s",
-          }}
-          onMouseEnter={(e) => { e.currentTarget.style.color = "var(--text-primary)"; }}
-          onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-secondary)"; }}
-        >
-          ← Dashboard
-        </button>
+      <span style={headerTitle}>File Annotation</span>
+      {screen === "workspace" && selectedDoc && (
+        <span style={headerSubtitle}>/ {selectedDoc.filename}</span>
       )}
     </header>
   );
