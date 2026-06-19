@@ -64,6 +64,23 @@ const uploadActiveStyle: React.CSSProperties = {
   boxShadow: "0px 4px 20px rgba(0,0,0,0.08), 0 0 0 3px rgba(37,99,235,0.1)",
 };
 
+const uploadDisabledStyle: React.CSSProperties = {
+  ...uploadZoneStyle,
+  cursor: "default",
+  opacity: 0.6,
+  borderColor: "#E5E7EB",
+};
+
+const spinnerStyle: React.CSSProperties = {
+  width: 24,
+  height: 24,
+  border: "3px solid #E5E7EB",
+  borderTopColor: "#2563eb",
+  borderRadius: "50%",
+  animation: "upload-spin 0.8s linear infinite",
+  margin: "0 auto 10px",
+};
+
 const uploadIconStyle: React.CSSProperties = {
   fontSize: 28,
   marginBottom: 10,
@@ -134,10 +151,15 @@ export function LandingPage({
   onDocumentsChange,
 }: LandingPageProps) {
   const [dragging, setDragging] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [uploadFileName, setUploadFileName] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleUpload = useCallback(
     async (file: File) => {
+      if (uploading) return;
+      setUploading(true);
+      setUploadFileName(file.name);
       try {
         const doc = await uploadDocument(file);
         useNotificationStore.getState().addNotification(
@@ -152,29 +174,36 @@ export function LandingPage({
           "Upload failed — check console",
           "error",
         );
+        setUploading(false);
+        setUploadFileName(null);
       }
     },
-    [documents, onDocumentsChange, onSelectDocument],
+    [documents, onDocumentsChange, onSelectDocument, uploading],
   );
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
+    if (uploading) return;
     e.preventDefault();
     setDragging(true);
-  }, []);
+  }, [uploading]);
 
   const handleDragLeave = useCallback(() => setDragging(false), []);
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
+      if (uploading) return;
       e.preventDefault();
       setDragging(false);
       const file = e.dataTransfer.files[0];
       if (file?.type === "application/pdf" || file?.type.startsWith("image/")) handleUpload(file);
     },
-    [handleUpload],
+    [handleUpload, uploading],
   );
 
-  const handleClick = useCallback(() => inputRef.current?.click(), []);
+  const handleClick = useCallback(() => {
+    if (uploading) return;
+    inputRef.current?.click();
+  }, [uploading]);
 
   const handleFileChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -184,8 +213,15 @@ export function LandingPage({
     [handleUpload],
   );
 
+  const zoneStyle = uploading
+    ? uploadDisabledStyle
+    : dragging
+      ? uploadActiveStyle
+      : uploadZoneStyle;
+
   return (
     <div style={pageStyle}>
+      <style>{`@keyframes upload-spin { to { transform: rotate(360deg); } }`}</style>
       <div style={heroStyle}>
         <h1 style={titleStyle}>Document Annotation Platform</h1>
         <p style={taglineStyle}>
@@ -194,19 +230,30 @@ export function LandingPage({
         </p>
 
         <div
-          style={dragging ? uploadActiveStyle : uploadZoneStyle}
+          style={zoneStyle}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
           onClick={handleClick}
         >
-          <div style={uploadIconStyle}>📄</div>
-          <p style={uploadTextStyle}>
-            {dragging
-              ? "Drop your file here"
-              : "Click or drag a file to upload"}
-          </p>
-          <p style={uploadHintStyle}>PDF, PNG, JPEG, GIF, WebP, TIFF, BMP</p>
+          {uploading ? (
+            <>
+              <div style={spinnerStyle} />
+              <p style={uploadTextStyle}>
+                Uploading{uploadFileName ? ` "${uploadFileName}"` : ""}…
+              </p>
+            </>
+          ) : (
+            <>
+              <div style={uploadIconStyle}>📄</div>
+              <p style={uploadTextStyle}>
+                {dragging
+                  ? "Drop your file here"
+                  : "Click or drag a file to upload"}
+              </p>
+              <p style={uploadHintStyle}>PDF, PNG, JPEG, GIF, WebP, TIFF, BMP</p>
+            </>
+          )}
           <input
             ref={inputRef}
             type="file"

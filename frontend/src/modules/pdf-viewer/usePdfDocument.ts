@@ -34,13 +34,13 @@ export function usePdfDocument(url: string | null): UsePdfDocumentResult {
         const count = renderer.getPageCount();
         setPageCount(count);
 
-        const dims = new Map<number, { width: number; height: number }>();
-        for (let i = 1; i <= count; i++) {
-          const d = await renderer.getPageDimensions(i);
-          dims.set(i, d);
-        }
+        const entries = await Promise.all(
+          Array.from({ length: count }, (_, i) =>
+            renderer.getPageDimensions(i + 1).then((d) => [i + 1, d] as const)
+          )
+        );
         if (cancelled) return;
-        setPageDimensions(dims);
+        setPageDimensions(new Map(entries));
         setLoaded(true);
       })
       .catch((err) => {

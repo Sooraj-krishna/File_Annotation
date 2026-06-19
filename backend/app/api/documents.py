@@ -6,11 +6,10 @@ PDF and image documents. Also serves the file bytes for frontend
 rendering and provides annotation queries scoped to a document.
 """
 
-import io
 import uuid
 
 from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile, status
-from fastapi.responses import StreamingResponse
+from fastapi.responses import FileResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.exceptions import NotFoundException
@@ -20,7 +19,6 @@ from app.schemas.annotation import AnnotationResponse
 from app.schemas.document import DocumentList, DocumentResponse
 from app.services.annotation import AnnotationService
 from app.services.document import DocumentService
-from app.storage.local import LocalStorage
 
 router = APIRouter()
 
@@ -130,17 +128,19 @@ async def get_document_file(
     db: AsyncSession = Depends(get_db),
 ):
     """
-    Stream the raw PDF file for frontend rendering via PDF.js.
+    Stream the raw file for frontend rendering.
 
-    The file is served inline so PDF.js can render it in the browser.
-    This endpoint is consumed by the frontend's PdfRenderer component.
+    Uses FileResponse for zero-copy sendfile (no RAM buffering) and
+    automatic HTTP Range (206 Partial Content) support. PDF.js uses
+    Range requests to load pages progressively, which dramatically
+    reduces time-to-first-page for large PDFs.
 
     Args:
         document_id: UUID of the document.
         db: Database session from dependency injection.
 
     Returns:
-        StreamingResponse with the PDF bytes and appropriate content headers.
+        FileResponse with the file bytes and appropriate content headers.
 
     Raises:
         404: If the document does not exist.
@@ -150,13 +150,13 @@ async def get_document_file(
     if not doc:
         raise HTTPException(status_code=404, detail="Document not found")
 
-    storage = LocalStorage()
-    file_bytes = await storage.read(doc.file_path)
-    return StreamingResponse(
-        io.BytesIO(file_bytes),
+    return FileResponse(
+        path=doc.file_path,
         media_type=doc.mime_type,
+        filename=doc.filename,
+        content_disposition_type="inline",
         headers={
-            "Content-Disposition": f'inline; filename="{doc.filename}"'
+            "Cache-Control": "public, max-age=3600",
         },
     )
 

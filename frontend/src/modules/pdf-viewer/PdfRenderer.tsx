@@ -21,10 +21,9 @@ interface PdfRendererProps {
 
 function PdfRenderer({ documentId }: PdfRendererProps) {
   const [mimeType, setMimeType] = useState<string | null>(null);
-  const [docMetaLoading, setDocMetaLoading] = useState(true);
   const [imageDimensions, setImageDimensions] = useState<{ width: number; height: number } | null>(null);
 
-  const imageUrl = useMemo(() => {
+  const fileUrl = useMemo(() => {
     if (!documentId) return null;
     return getDocumentFileUrl(documentId);
   }, [documentId]);
@@ -35,27 +34,24 @@ function PdfRenderer({ documentId }: PdfRendererProps) {
     getDocument(documentId).then((d) => {
       if (cancelled) return;
       setMimeType(d.mimeType);
-      setDocMetaLoading(false);
-    }).catch(() => {
-      if (!cancelled) setDocMetaLoading(false);
-    });
+    }).catch(() => {});
     return () => { cancelled = true; };
   }, [documentId]);
 
   const isImage = mimeType?.startsWith("image/");
 
   useEffect(() => {
-    if (!isImage || !imageUrl) return;
+    if (!isImage || !fileUrl) return;
     let cancelled = false;
     const img = new Image();
     img.onload = () => {
       if (!cancelled) setImageDimensions({ width: img.naturalWidth, height: img.naturalHeight });
     };
-    img.src = imageUrl;
+    img.src = fileUrl;
     return () => { cancelled = true; };
-  }, [isImage, imageUrl]);
+  }, [isImage, fileUrl]);
 
-  const pdfUrl = documentId && !isImage && !docMetaLoading ? getDocumentFileUrl(documentId) : null;
+  const pdfUrl = documentId && !isImage ? fileUrl : null;
   const { pageCount, pageDimensions, renderPage, loaded, error } = usePdfDocument(pdfUrl);
 
   const effectivePageCount = isImage ? 1 : pageCount;
@@ -417,7 +413,7 @@ function PdfRenderer({ documentId }: PdfRendererProps) {
     return <div>Failed to load PDF: {error}</div>;
   }
 
-  if (docMetaLoading || (isImage && !imageDimensions) || (!isImage && (!loaded || pageDimensions.size === 0))) {
+  if ((isImage && !imageDimensions) || (!isImage && (!loaded || pageDimensions.size === 0))) {
     return (
       <div
         style={{
@@ -493,7 +489,7 @@ function PdfRenderer({ documentId }: PdfRendererProps) {
             >
               {isImage ? (
                 <img
-                  src={imageUrl!}
+                  src={fileUrl!}
                   alt={`Document page ${page}`}
                   style={{
                     position: "absolute",
